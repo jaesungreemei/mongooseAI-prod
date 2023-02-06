@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  kafka-ui:
+    # network_mode: bridge
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - '8080:8080'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=mongoose-kafka
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=localhost:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
+      # - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=172.19.175.135:9092
+      # - KAFKA_CLUSTERS_0_ZOOKEEPER=172.19.175.135:2181

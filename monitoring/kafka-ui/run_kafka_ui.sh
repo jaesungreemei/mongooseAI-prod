@@ -1,0 +1,1 @@
+/usr/lib/jvm/java-17-openjdk-amd64/bin/java -Dspring.config.additional-location=application-local.yml -jar kafka-ui-api-v0.5.0.jar

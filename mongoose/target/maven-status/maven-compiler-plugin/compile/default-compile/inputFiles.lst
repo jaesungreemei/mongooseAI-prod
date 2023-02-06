@@ -1,0 +1,11 @@
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/ProducerAppServer.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/Consumer.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/PropertiesHelper.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/MongooseServer.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/Producer.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/ProducerApp.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/ConsumerApp.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/TestServer.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/AbstractKafkaApp.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/App.java
+/home/greemei/mongooseAI/production/mongoose/src/main/java/kafka/MessageHelper.java
