@@ -26,13 +26,14 @@ def main(ip, port, delay=0.2):
             json_data = json.loads(data)
             
             metric_category = json_data['metric_category']
-            dt = json_data['dt']
-            machine_code = json_data['machine_id']
-            process_code = json_data['process_id']
+            collected_at = json_data['collected_at']
+            company_id = json_data['company_id']
+            machine_id = json_data['machine_id']
+            process_id = json_data['process_id']
 
             # Send Data to Connection
             s.sendall(bytes(data + '\n', encoding="utf-8"))
-            print('Sent Data: [{}] {} - {} - {}'.format(metric_category, dt, machine_code, process_code))
+            print('Sent Data: [{}: {}] {} - {} - {}'.format(company_id, metric_category, collected_at, machine_id, process_id))
 
             # Add delay
             time.sleep(delay)

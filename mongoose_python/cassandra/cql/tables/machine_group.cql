@@ -1,8 +1,9 @@
 CREATE TABLE IF NOT EXISTS mongoose_keyspace.machine_group (
+  company_id text,
   machine_id text,
   created_at timeuuid,
-  characteristics map<text, text>,
   description text,
-  PRIMARY KEY ((machine_id))
+  PRIMARY KEY ((company_id), machine_id)
 )
-WITH comment = 'Q1. Machine Information' ;
+WITH comment = 'Q1. Machine Information'
+AND CLUSTERING ORDER BY (machine_id ASC) ;

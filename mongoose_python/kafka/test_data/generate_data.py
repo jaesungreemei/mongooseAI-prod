@@ -13,6 +13,7 @@ num_machines = 3            # How many machines do we want to test?
 num_processes_range = 3     # What is the maximum number of processes each machine can have?
 d1 = datetime.strptime('1/1/2022 1:30 PM', '%m/%d/%Y %I:%M %p')
 d2 = datetime.strptime('1/1/2022 2:30 PM', '%m/%d/%Y %I:%M %p')
+company_id = "MONGOOSEAI"
 
 #############################################################################################
 
@@ -26,7 +27,7 @@ d2 = datetime.strptime('1/1/2022 2:30 PM', '%m/%d/%Y %I:%M %p')
 #     random_second = random.randrange(int_delta)
 #     return start + timedelta(seconds=random_second)
 
-def generate_data(num_machines=num_machines, num_processes=num_processes_range, date_range=(d1, d2)):
+def generate_data(company=company_id, num_machines=num_machines, num_processes=num_processes_range, date_range=(d1, d2)):
     """
     Generate random data for each of "Power", "PLC", "CMS" and combine into JSON format
     """
@@ -70,9 +71,9 @@ def generate_data(num_machines=num_machines, num_processes=num_processes_range, 
                 # use_dt = dt.strftime("%m/%d/%Y %H:%M:%S")
                 use_dt = dt.isoformat()
 
-                power = get_Power(use_dt, machine_id, process_id, sensor_id)
-                plc = get_PLC(use_dt, machine_id, process_id, sensor_id)
-                cms = get_CMS(use_dt, machine_id, process_id, sensor_id)
+                power = get_Power(use_dt, company_id, machine_id, process_id, sensor_id)
+                plc = get_PLC(use_dt, company_id, machine_id, process_id, sensor_id)
+                cms = get_CMS(use_dt, company_id, machine_id, process_id, sensor_id)
 
                 power_data.append(json.dumps(power))
                 plc_data.append(json.dumps(plc))

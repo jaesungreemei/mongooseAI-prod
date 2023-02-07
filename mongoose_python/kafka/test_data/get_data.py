@@ -1,4 +1,5 @@
 import random
+import json
 
 # Data Specification:
 # Key: String
@@ -8,7 +9,7 @@ import random
 # Power Data
 #############################################################################################
 
-def get_Power(dt, machine_id, process_id, sensor_id):
+def get_Power(dt, company_id, machine_id, process_id, sensor_id):
     '''
     Generate random Power data for given:
      - dt
@@ -31,6 +32,7 @@ def get_Power(dt, machine_id, process_id, sensor_id):
     # Return as a Python dictionary
     data = {
         'metric_category': 'power',
+        'company_id': company_id,
         'collected_at': dt,
         'machine_id': machine_id,
         'process_id': process_id,
@@ -49,7 +51,7 @@ def get_Power(dt, machine_id, process_id, sensor_id):
 # PLC Data
 #############################################################################################
 
-def get_PLC(dt, machine_id, process_id, sensor_id):
+def get_PLC(dt, company_id, machine_id, process_id, sensor_id):
     '''
     Generate random PLC data for given:
      - dt
@@ -70,6 +72,7 @@ def get_PLC(dt, machine_id, process_id, sensor_id):
     # Return as a Python dictionary
     data = {
         'metric_category': 'plc',
+        'company_id': company_id, 
         'collected_at': dt,
         'machine_id': machine_id,
         'process_id': process_id,
@@ -87,7 +90,7 @@ def get_PLC(dt, machine_id, process_id, sensor_id):
 # CMS Data
 #############################################################################################
 
-def get_CMS(dt, machine_id, process_id, sensor_id):
+def get_CMS(dt, company_id, machine_id, process_id, sensor_id):
     '''
     Generate random CMS data for given:
      - dt
@@ -110,6 +113,7 @@ def get_CMS(dt, machine_id, process_id, sensor_id):
     # Return as a Python dictionary
     data = {
         'metric_category': 'cms',
+        'company_id': company_id,
         'collected_at': dt,
         'machine_id': machine_id,
         'process_id': process_id,

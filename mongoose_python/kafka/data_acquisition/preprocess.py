@@ -40,6 +40,7 @@ def preprocess_plc_by_sensor(data):
     
     # collected_at = json_data['collected_at']
     collected_at = datetime.now().isoformat()
+    company_id = json_data['company_id']
     machine_id = json_data['machine_id']
     process_id = json_data['process_id']
 
@@ -51,6 +52,7 @@ def preprocess_plc_by_sensor(data):
         'sensor_id': json_data['sensor_id'],
         'hour': hour,
         'collected_at': collected_at,
+        'company_id': company_id,
         'machine_id': machine_id,
         'process_id': process_id,
         'machine_status': json_data['machine_status'],
@@ -95,6 +97,7 @@ def preprocess_data_by_metric(data):
     
     # Extract necessary variables
     metric_category = json_data['metric_category']
+    company_id = json_data['company_id']
     sensor_id = json_data['sensor_id']
     machine_id = json_data['machine_id']
     process_id = json_data['process_id']
@@ -117,10 +120,11 @@ def preprocess_data_by_metric(data):
         data = {
             'metric_category': metric_category,
             'hour': hour,
+            'company_id': company_id,
             'sensor_id': sensor_id,
             'machine_id': machine_id,
             'process_id': process_id,
-            'collected_a': collected_at
+            'collected_at': collected_at
         }
         data['metric'] = k
         data['value'] = v
