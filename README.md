@@ -12,7 +12,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | Apache Kafka      | 3.3.1  |
 | Apache Cassandra  | 4.0.7  |
 | DataStax Apache Kafka Connector | 1.4.0 |
-| kafka-python | 2.0.2 |
+| DataStax Cassandra Python Driver | 3.25 |
 
 * Development Environment: WSL2 Ubuntu 20.04.5 LTS on Windows 11
 

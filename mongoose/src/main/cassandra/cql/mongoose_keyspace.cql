@@ -1,1 +1,0 @@
-CREATE KEYSPACE IF NOT EXISTS mongoose_keyspace WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1':1};
