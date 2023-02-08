@@ -16,5 +16,4 @@ fi
 
 ###########################################################################
 
-cd ../
-kafka_2.13-3.3.1/bin/kafka-server-start.sh config/server.properties
+kafka_2.13-3.3.1/bin/kafka-server-start.sh kafka_2.13-3.3.1/config/server.properties

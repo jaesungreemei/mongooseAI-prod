@@ -127,7 +127,7 @@ def preprocess_data_by_metric(data):
             'collected_at': collected_at
         }
         data['metric'] = k
-        data['value'] = v
+        data['value'] = str(v)
 
         all_data.append(json.dumps(data))
 

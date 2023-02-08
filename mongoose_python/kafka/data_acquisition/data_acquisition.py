@@ -2,8 +2,11 @@ import socket
 import logging
 import pathlib
 
+import sys
+sys.path.insert(0, "/home/greemei/mongooseAI-prod/mongoose_python/kafka")
+
 from preprocess import preprocess_plc_by_sensor, preprocess_data_by_metric
-from mongoose_python.kafka.ProducerApp import ProducerApp
+from ProducerApp import ProducerApp
 
 ######################################################
 # Helper Functions, Helper Variables
@@ -52,16 +55,20 @@ def main(plc_producer, ip, port):
 
         while(True):
             data = conn.recv(2048)
+            decoded_data = data.decode()[:-1]       # Get rid of newline character at end
+
+            print("Received Data: [{}]".format(decoded_data))
 
             # Table: mongoose_keyspace.plc_by_sensor
             topic_plc_by_sensor = "plc_topic"
-            msg_key, plc_data = preprocess_plc_by_sensor(data.decode())
+            msg_key, plc_data = preprocess_plc_by_sensor(decoded_data)
             plc_producer.send_msg(topic_plc_by_sensor, msg_key, plc_data)
 
             # Table: mongoose_keyspace.data_by_metric
             topic_data_by_metric = "metric_topic"
-            msg_key, metric_data = preprocess_data_by_metric(data.decode())
-            plc_producer.send_msg(topic_data_by_metric, msg_key, metric_data)
+            msg_key, all_data = preprocess_data_by_metric(data.decode())
+            for metric_data in all_data:
+                plc_producer.send_msg(topic_data_by_metric, msg_key, metric_data)
 
         conn.close()
 

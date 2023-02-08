@@ -1,7 +1,10 @@
 import pathlib
 import logging
 
-from mongoose.src.main.kafka_python.ConsumerApp import ConsumerApp
+import sys
+sys.path.insert(0, "/home/greemei/mongooseAI-prod/mongoose_python/kafka")
+
+from ConsumerApp import ConsumerApp
 
 ######################################################
 # Helper Functions, Helper Variables

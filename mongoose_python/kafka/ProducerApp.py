@@ -1,6 +1,7 @@
 from confluent_kafka import Producer
 from configparser import ConfigParser
 
+from datetime import datetime
 import logging
 
 ######################################################
@@ -29,9 +30,10 @@ class ProducerApp:
             print(err_msg)
 
         else:
-            success_msg = 'Produced Message ({}): [Topic: {}] [Partition: {}] [Key: {}] Value: {}'.format( msg.timestamp(), msg.topic(), msg.partition(), msg.key(), msg.value() )
+            msg_timestamp = datetime.fromtimestamp(msg.timestamp()[-1] / 1000)
+
+            success_msg = 'Produced Message ({}): [Topic: {}] [Partition: {}] [Key: {}] Value: {}'.format( msg_timestamp, msg.topic(), msg.partition(), msg.key(), msg.value() )
             logging.info(success_msg)
-            print(msg)
             print(success_msg)
 
     def send_msg(self, topic, use_key, msg):

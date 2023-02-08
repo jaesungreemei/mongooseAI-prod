@@ -1,3 +1,3 @@
 #! usr/bin/bash
-cd ../
-source python-env/bin/activate
+cd python-env
+source bin/activate

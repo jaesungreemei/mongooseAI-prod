@@ -47,4 +47,4 @@ if __name__=='__main__':
     port = 4444
     delay = 2
 
-    main(ip, port, delay=2)
+    main(ip, port, delay=delay)

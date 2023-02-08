@@ -85,4 +85,6 @@ def generate_data(company=company_id, num_machines=num_machines, num_processes=n
 
 if __name__=='__main__':
     power_data, plc_data, cms_data = generate_data()
+
+    print(len(plc_data))    
     print(plc_data[0])
