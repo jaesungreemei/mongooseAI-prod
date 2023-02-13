@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------
--- Master Tables (data generated via Python code)
+-- Master Tables
 ---------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS mongoose_keyspace.machine_group (

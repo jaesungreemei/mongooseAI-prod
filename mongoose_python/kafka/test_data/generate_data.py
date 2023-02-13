@@ -88,3 +88,6 @@ if __name__=='__main__':
 
     print(len(plc_data))    
     print(plc_data[0])
+
+    print(power_data[0])
+    print(cms_data[0])

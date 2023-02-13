@@ -4,9 +4,9 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 ## Full Documentation
 * Production Details (mongoose-prod): https://docs.google.com/document/d/1FeQUUAP0NwxkRoNrd_TKdKlIQN2l_dvRfsZKIYPwlu4/edit?usp=sharing
 
-## Overview
+## (1) Overview
 
-### Prerequisites
+### (1.1) Prerequisites
 | Framework         | Version |
 | ----------------- | ------------- |
 | Apache Kafka      | 3.3.1  |
@@ -17,17 +17,17 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 
 * Development Environment: WSL2 Ubuntu 20.04.5 LTS on Windows 11
 
-### Architecture
+### (1.2) Architecture
 ![Alt text](/architecture.jpg?raw=true "Data Pipeline Architecture")
 
-### Usage
+### (1.3) Usage
 | Function | Pipeline | Description |
 | -------- | -------- | ----------- |
 | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
 | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
 | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
-## Directory Structure
+## (2) Directory Structure
 
 ```
 mongooseAI-prod
@@ -110,7 +110,7 @@ mongooseAI-prod
     └── kafka-connect-cassandra-sink-1.4.0.jar
 ```
 
-##### Ports
+### (2.1) Ports
 | Application | Port | Edit File |
 | ----------- | ---- | --------- |
 | Cassandra | 9042 | apache-cassandra-4.0.7/conf/cassandra.yaml |
@@ -119,7 +119,7 @@ mongooseAI-prod
 | Test Data Acquisition | 4444 | mongoose_python/kafka/data_acquisition/data_acquisition.py |
 | UI for Apache Kafka | 8080 | monitoring/kafka-ui/docker-compose-kafka-ui.yaml |
 
-##### Logging
+### (2.2) Logging
 | Framework | Log File | Location |
 | ----------- | ---- | --------- |
 | Cassandra | debug.log, system.log | apache-cassandra-4.0.7/logs/ |
@@ -157,7 +157,7 @@ bin/cqlsh
 ```
 bin/connect-standalone.sh config/cassandra_sink/connect-standalone.properties config/cassandra_sink/cassandra-sink-standalone.properties
 ```
-(Use *connectdistributed.sh* depending on situation)
+(Use *connect-distributed.sh* depending on situation)
 
 **Note***: must edit .bashrc file and include path to `/kafka_2.13-3.3.1/bin/` to use shell commands without having to input full path*
 
@@ -165,7 +165,7 @@ bin/connect-standalone.sh config/cassandra_sink/connect-standalone.properties co
 ```
 cd mongooseAI/
 bash launch.sh
-```-
+```
 
 ## Contact
 Jae Sung Park.
