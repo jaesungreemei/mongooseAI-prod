@@ -1,7 +1,6 @@
 apache-cassandra-4.0.7/
 kafka_2.13-3.3.1/
 kafka-connect/
-architecture.jpg
 
 # Python
 __pycache__/
