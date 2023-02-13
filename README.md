@@ -1,22 +1,69 @@
 # Mongoose AI
-
 Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 
-## Documentation
-* Mongoose AI Trello: https://trello.com/b/4K66AAUE/mongooseai
-*Trello Workspace contains all links to all documnetation.*
+## Full Documentation
+* Production Details (mongoose-prod): https://docs.google.com/document/d/1FeQUUAP0NwxkRoNrd_TKdKlIQN2l_dvRfsZKIYPwlu4/edit?usp=sharing
 
-## Prerequisites
+## Overview
+
+### Prerequisites
 | Framework         | Version |
 | ----------------- | ------------- |
 | Apache Kafka      | 3.3.1  |
 | Apache Cassandra  | 4.0.7  |
 | DataStax Apache Kafka Connector | 1.4.0 |
-| DataStax Cassandra Python Driver | 3.25 |
+| DataStax Driver for Apache Cassandra | 3.25 |
+| Confluent Kafka Python | 2.0.2 |
 
 * Development Environment: WSL2 Ubuntu 20.04.5 LTS on Windows 11
 
+### Architecture
+![Alt text](/architecture.jpg?raw=true "Data Pipeline Architecture")
+
+### Usage
+| Function | Pipeline | Description |
+| -------- | -------- | ----------- |
+| Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
+| Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
+| Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
+
 ## Directory Structure
+
+```
+mongooseAI-prod
+    .
+    ├── bin                     # shell files to run servers
+    ├── downloads               # download tar files
+    .
+    ├── apache-cassandra-4.0.7      # Apache Cassandra files installed from apache-cassandra-4.0.7-bin.tar.gz
+    ├── kafka_2.13-3.3.1            # Apache Kafka files installed from kafka_2.13-3.3.1.tgz
+    .
+    ├── kafka-connect               # DataStax Kafka Connector files installed from kafka-connect-cassandra-sink-1.4.0.tar.gz
+    ├──├── kafka-connect-cassandra-sink-1.4.0
+    ├──├──├── conf
+    ├──├──├── conf-prod             # custom configurations for Kafka Connect
+    .
+    ├── mongoose_java
+    ├──├── src
+    ├──├──├── main
+    ├──├──├──├── java
+    ├──├──├──├──├── kafka           # Java implementation of Kafka applications
+    ├──├──├──├──├── resources
+    .
+    ├── mongoose_python
+    ├──├── cassandra                # Cassandra applications, CQL code
+    ├──├──├── cql
+    ..
+    ├──├── kafka                    # Python implementation of Kafka applications
+    ├──├──├── ai-agent
+    ├──├──├── data_acquisition
+    ├──├──├── test_data
+    .
+    ├── monitoring                  # Monitoring applications for Kafka, Cassandra.
+    ├──├── kafka-ui
+    .
+    ├── python-env                  # Python virtual environment files.
+```
 
 ##### Apache Kafka
 ```
@@ -27,12 +74,10 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
     ├── bin                   
     ├── config                  # config files containing customized .properties files
     ├── libs                    
-    ├── connectors              # new location of extracted connector files
     ├── licenses
     ├── logs
     └── site-docs
 ```
-> The only differences from the original Apache Kafka directory structure is in the `config` and `connectors` directories. 
 
 ##### Apache Cassandra
 ```
@@ -55,25 +100,37 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 
 ##### DataStax Apache Kafka Connector
 ```
-/kafka_2.13-3.3.1/connectors/kafka-connect-cassandra
+/kafka-connect/kafka-connect-cassandra-sink-1.4.0/
     .
     ├── LICENSE
     ├── README.md
     ├── THIRD-PARTY
     ├── conf
+    ├── conf-prod
     └── kafka-connect-cassandra-sink-1.4.0.jar
 ```
-> DataStax Apache Kafka Connector must be located within the Kafka directory structure, in the "connectors" directory.
 
-##### Downloads
-* Apache Cassandra: https://cassandra.apache.org/_/download.html
-* Apache Kafka: https://kafka.apache.org/downloads
-* Kafka Connect: https://docs.datastax.com/en/kafka/doc/kafka/install/kafkaInstall.html
-> *downloads*: Directory with tar files used in this repository.
+##### Ports
+| Application | Port | Edit File |
+| ----------- | ---- | --------- |
+| Cassandra | 9042 | apache-cassandra-4.0.7/conf/cassandra.yaml |
+| Zookeeper | 2181 | kafka_2.13-3.3.1/config/server.properties|
+| Kafka | 9092 | kafka_2.13-3.3.1/config/server.properties |
+| Test Data Acquisition | 4444 | mongoose_python/kafka/data_acquisition/data_acquisition.py |
+| UI for Apache Kafka | 8080 | monitoring/kafka-ui/docker-compose-kafka-ui.yaml |
 
+##### Logging
+| Framework | Log File | Location |
+| ----------- | ---- | --------- |
+| Cassandra | debug.log, system.log | apache-cassandra-4.0.7/logs/ |
+| Kafka, Zookeeper Brokers | server.log, state-change.log | kafka_2.13-3.3.1/logs/ |
+| Kafka Connect | connect.log | kafka_2.13-3.3.1/logs/ |
+| (Java) Kafka Producer | logging.log | mongoose_java/ |
+| (Python) Cassandra App | cassandra_setup.log | mongoose_python/cassandra/logs/ |
+| (Python) Data Acquisition Service | data_acquisition.log | mongoose_python/kafka/data_acquisition/logs/ |
+| (Python) AI Agent | consumer.log | monogoose_python/kafka/ai-agent/logs/ |
 
-## Shell Commands
-* Start Zookeeper
+* Application
 ```
 zookeeper-server-start.sh ~/mongooseAI/kafka_2.13-3.3.1/config/zookeeper.properties
 ```
@@ -100,7 +157,7 @@ bin/cqlsh
 ```
 bin/connect-standalone.sh config/cassandra_sink/connect-standalone.properties config/cassandra_sink/cassandra-sink-standalone.properties
 ```
-(Use *connect-distributed.sh* depending on situation)
+(Use *connectdistributed.sh* depending on situation)
 
 **Note***: must edit .bashrc file and include path to `/kafka_2.13-3.3.1/bin/` to use shell commands without having to input full path*
 
@@ -108,7 +165,7 @@ bin/connect-standalone.sh config/cassandra_sink/connect-standalone.properties co
 ```
 cd mongooseAI/
 bash launch.sh
-```
+```-
 
 ## Contact
 Jae Sung Park.
