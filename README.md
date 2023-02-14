@@ -4,7 +4,30 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 ## Full Documentation
 * Production Details (mongoose-prod): https://docs.google.com/document/d/1FeQUUAP0NwxkRoNrd_TKdKlIQN2l_dvRfsZKIYPwlu4/edit?usp=sharing
 
-## Table of Contents
+### Prerequisites<a id="1-1"></a>
+| Framework         | Version |
+| ----------------- | ------------- |
+| Apache Kafka      | 3.3.1  |
+| Apache Cassandra  | 4.0.7  |
+| DataStax Apache Kafka Connector | 1.4.0 |
+| DataStax Driver for Apache Cassandra | 3.25 |
+| Confluent Kafka Python | 2.0.2 |
+
+* Development Environment: WSL2 Ubuntu 20.04.5 LTS on Windows 11
+
+### Architecture<a id="1-2"></a>
+![Alt text](/architecture.jpg?raw=true "Data Pipeline Architecture")
+
+### Usage<a id="1-3"></a>
+| Implemented? | Function | Pipeline | Description |
+| -------- | -------- | -------- | ----------- |
+| - [x] | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
+| - [ ] | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
+| - [ ] | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+<!-- ## Table of Contents
 - [(1) Overview](#1)
   * [(1.1) Prerequisites](#1-1)
   * [(1.2) Architecture](#1-2)
@@ -17,7 +40,6 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
   * [(4.1) Setup](#4-1)
   * [(4.2) Run Files](#4-2)
   * [(4.3) Edit Config Files](#4-3)
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 ## (1) Overview<a id="1"></a>
 
@@ -38,11 +60,9 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 ### (1.3) Usage<a id="1-3"></a>
 | Implemented? | Function | Pipeline | Description |
 | -------- | -------- | -------- | ----------- |
-| [x] | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
-| [ ] | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
-| [ ] | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
-
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
+| - [x] | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
+| - [ ] | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
+| - [ ] | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
 ## (2) Directory Structure<a id="2"></a>
 
@@ -127,8 +147,6 @@ mongooseAI-prod
     └── kafka-connect-cassandra-sink-1.4.0.jar
 ```
 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
-
 ## (3) Configurations<a id="3"></a>
 
 ### (3.1) Ports<a id="3-1"></a>
@@ -150,8 +168,6 @@ mongooseAI-prod
 | (Python) Cassandra App | <ul><li>cassandra_setup.log</li></ul> | mongoose_python/cassandra/logs/ |
 | (Python) Data Acquisition Service | <ul><li>data_acquisition.log</li></ul> | mongoose_python/kafka/data_acquisition/logs/ |
 | (Python) AI Agent | <ul><li>consumer.log</li></ul> | monogoose_python/kafka/ai-agent/logs/ |
-
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 ## (4) Getting Started<a id="4"></a>
 
@@ -290,17 +306,10 @@ pip3 install confluent-kafka
 | cassandra-env.sh | Check allocation of memory for Cassandra |
 | cassandra.yaml | All Cassandra configurations |
 
+
+**Note***: must edit .bashrc file and include path to `/kafka_2.13-3.3.1/bin/` to use shell commands without having to input full path* -->
+
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-
-
-**Note***: must edit .bashrc file and include path to `/kafka_2.13-3.3.1/bin/` to use shell commands without having to input full path*
-
-* Automate in WSL2 Using Shell Script
-```
-cd mongooseAI/
-bash launch.sh
-```
 
 ## Contact
 Jae Sung Park.
