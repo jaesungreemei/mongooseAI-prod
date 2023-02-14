@@ -4,9 +4,24 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 ## Full Documentation
 * Production Details (mongoose-prod): https://docs.google.com/document/d/1FeQUUAP0NwxkRoNrd_TKdKlIQN2l_dvRfsZKIYPwlu4/edit?usp=sharing
 
-## (1) Overview
+## Table of Contents
+- [(1) Overview](#1)
+  * [(1.1) Prerequisites](#1-1)
+  * [(1.2) Architecture](#1-2)
+  * [(1.3) Usage](#1-3)
+- [(2) Directory Structure](#2)
+- [(3) Configurations](#3)
+  * [(3.1) Ports](#3-1)
+  * [(3.2) Logging](#3-2)
+- [(4) Getting Started](#4)
+  * [(4.1) Setup](#4-1)
+  * [(4.2) Run Files](#4-2)
+  * [(4.3) Edit Config Files](#4-3)
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-### (1.1) Prerequisites
+## (1) Overview<a id="1"></a>
+
+### (1.1) Prerequisites<a id="1-1"></a>
 | Framework         | Version |
 | ----------------- | ------------- |
 | Apache Kafka      | 3.3.1  |
@@ -17,17 +32,19 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 
 * Development Environment: WSL2 Ubuntu 20.04.5 LTS on Windows 11
 
-### (1.2) Architecture
+### (1.2) Architecture<a id="1-2"></a>
 ![Alt text](/architecture.jpg?raw=true "Data Pipeline Architecture")
 
-### (1.3) Usage
-| Function | Pipeline | Description |
-| -------- | -------- | ----------- |
-| Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
-| Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
-| Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
+### (1.3) Usage<a id="1-3"></a>
+| Implemented? | Function | Pipeline | Description |
+| -------- | -------- | -------- | ----------- |
+| [x] | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
+| [ ] | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
+| [ ] | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
-## (2) Directory Structure
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+## (2) Directory Structure<a id="2"></a>
 
 ```
 mongooseAI-prod
@@ -110,7 +127,11 @@ mongooseAI-prod
     └── kafka-connect-cassandra-sink-1.4.0.jar
 ```
 
-### (2.1) Ports
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+## (3) Configurations<a id="3"></a>
+
+### (3.1) Ports<a id="3-1"></a>
 | Application | Port | Edit File |
 | ----------- | ---- | --------- |
 | Cassandra | 9042 | apache-cassandra-4.0.7/conf/cassandra.yaml |
@@ -119,45 +140,150 @@ mongooseAI-prod
 | Test Data Acquisition | 4444 | mongoose_python/kafka/data_acquisition/data_acquisition.py |
 | UI for Apache Kafka | 8080 | monitoring/kafka-ui/docker-compose-kafka-ui.yaml |
 
-### (2.2) Logging
+### (3.2) Logging<a id="3-2"></a>
 | Framework | Log File | Location |
 | ----------- | ---- | --------- |
-| Cassandra | debug.log, system.log | apache-cassandra-4.0.7/logs/ |
-| Kafka, Zookeeper Brokers | server.log, state-change.log | kafka_2.13-3.3.1/logs/ |
-| Kafka Connect | connect.log | kafka_2.13-3.3.1/logs/ |
-| (Java) Kafka Producer | logging.log | mongoose_java/ |
-| (Python) Cassandra App | cassandra_setup.log | mongoose_python/cassandra/logs/ |
-| (Python) Data Acquisition Service | data_acquisition.log | mongoose_python/kafka/data_acquisition/logs/ |
-| (Python) AI Agent | consumer.log | monogoose_python/kafka/ai-agent/logs/ |
+| Cassandra | <ul><li>debug.log</li><li>system.log</li></ul> | apache-cassandra-4.0.7/logs/ |
+| Kafka, Zookeeper Brokers | <ul><li>server.log</li><li>state-change.log</li></ul> | kafka_2.13-3.3.1/logs/ |
+| Kafka Connect | <ul><li>connect.log</li></ul> | kafka_2.13-3.3.1/logs/ |
+| (Java) Kafka Producer | <ul><li>logging.log</li></ul> | mongoose_java/ |
+| (Python) Cassandra App | <ul><li>cassandra_setup.log</li></ul> | mongoose_python/cassandra/logs/ |
+| (Python) Data Acquisition Service | <ul><li>data_acquisition.log</li></ul> | mongoose_python/kafka/data_acquisition/logs/ |
+| (Python) AI Agent | <ul><li>consumer.log</li></ul> | monogoose_python/kafka/ai-agent/logs/ |
 
-* Application
-```
-zookeeper-server-start.sh ~/mongooseAI/kafka_2.13-3.3.1/config/zookeeper.properties
-```
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-* Start Kafka
-```
-cd /tmp/kafka-logs
-rm -rf *                # Must clear logs first
+## (4) Getting Started<a id="4"></a>
 
-kafka-server-start.sh ~/mongooseAI/kafka_2.13-3.3.1/config/server.properties
+### (4-1) Setup<a id="4-1"></a>
+* Install Kafka
+>> Starting Directory: mongooseAI-prod/
+```
+tar -xzf ./downloads/kafka_2.13-3.3.1.tgz
 ```
 
-* Start Cassandra
+* Install Cassandra
+>> Starting Directory: mongooseAI-prod/
 ```
-bin/cassandra
-```
-
-* Start CQL
-```
-bin/cqlsh
+tar xzvf ./downloads/apache-cassandra-4.0.7-bin.tar.gz
 ```
 
-* Start Kafka Connector
+* Install DataStax Kafka Connector
+>> Starting Directory: mongooseAI-prod/
 ```
-bin/connect-standalone.sh config/cassandra_sink/connect-standalone.properties config/cassandra_sink/cassandra-sink-standalone.properties
+mkdir kafka-connect
+cd ./kafka-connect/
+tar xzf ../downloads/kafka-connect-cassandra-sink-1.4.0.tar.gz
 ```
-(Use *connect-distributed.sh* depending on situation)
+
+    * Configure connect-standalone.properties
+>> Starting Directory: mongooseAI-prod/kafka-connect/
+```
+cd ../kafka_2.13-3.3.1/config/
+
+# Configure path to Kafka Connect JAR file
+echo plugin.path=~/mongooseAI-prod/kafka-connect/kafka-connect-cassandra-sink-1.4.0/kafka-connect-cassandra-sink-1.4.0.jar >> connect-standalone.properties
+```
+
+    * Edit connect-standalone.properties
+```
+key.converter=org.apache.kafka.connect.storage.StringConverter
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+```
+
+    * Move and configure cassandra-sink-standalone.properties
+>> Starting Directory: mongooseAI-prod/kafka-conncet/
+```
+mkdir ./kafka-connect-cassandra-sink-1.4.0/conf-prod
+cd kafka-connect-cassandra-sink-1.4.0/conf-prod
+cp ../conf/cassandra-sink-standalone.properties.sample cassandra-sink-standalone.properties
+```
+
+    * Edit cassandra-sink-standalone.properties according to Cassandra DB structure
+>> Details in mongooseAI-prod/kafka-connect/README.md
+
+    * Configure Kafka Connect logging
+>> kafka_2.13-3.3.1/config/connect-log4j.properties
+
+* Python Virtual Environment Setup
+>> Starting Directory: mongooseAI-prod/
+```
+pip3 install virtualenv
+python3 -m venv python-env
+
+source python-env/bin/activate
+```
+
+    * Install DataStax Cassandra Python Driver
+```
+pip3 install cassandra-driver
+```
+
+    * Install Confluent Kafka Python Client
+```
+pip3 install confluent-kafka
+```
+
+### (4-2) Run Files<a id="4-2"></a>
+* Start Servers
+>> Starting Directory: mongooseAI-prod/
+| Shell File | Description |
+| ---------- | ----------- |
+| launch_wsl.sh | For development in WSL2 Environment <br><ul><li>Set bash PATH environment variable</li><li>Split panes</li></ul> |
+| bin/run_cassandra.sh | <ul><li>Set Cassandra server</li></ul> |
+| bin/run_zookeeper.sh | <ul><li>Set Zookeeper server</li></ul> |
+| bin/run_kafka.sh | <ul><li>Delete all files in /tmp/</li><li>Start Kafka server</li></ul> |
+| bin/run_connect.sh | <ul><li>Start Kafka Connect server</li></ul> |
+| bin/run_venv.sh | <ul><li>Start Python virtual environment</li></ul> |
+
+* Run Kafka Python Tests
+>> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+| Directory | Shell File | Description |
+| --------- | ---------- | ----------- |
+| mongoose_python | run_acquisition.sh | <ul><li>Start data acquisition producer</li></ul> |
+| mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
+| mongoose_python | run_acquisition.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
+
+* Run Kafka Java Tests
+>> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+| Directory | Shell File | Description |
+| --------- | ---------- | ----------- |
+| mongoose_java | run_producer.sh | <ul><li>Start data acquisition producer</li></ul> |
+| mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
+| mongoose_java | run_consumer.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
+
+* Monitoring Solutions
+>> Starting Directory: mongooseAI-prod/monitoring/
+| Shell File | Description |
+| ---------- | ----------- |
+| kafka-ui/run_kafka_ui.sh | Start UI for Apache Kafka application |
+
+### (4-3) Edited Config Files<a id="4-3"></a>
+* Kafka Config Files: __kafka_2.13-3.3.1/config__
+| Edited Files | Description |
+| ------------ | ----------- |
+| connect-log4j.properties | Add Kafka Connect log properties, Kafka log settings |
+| server.properties | Configure 'listeners' for Kafka broker, Zookeeper broker |
+| producer.properties | Configure list of brokers used for bootstrapping knowledge about cluster |
+| consumer.properties | Configure list of brokers used for bootstrapping knowledge about cluster |
+| connect-standalone.properties | Configure converters and schemas needed for Kafka Connect |
+| kafka-server-start.sh | Check allocation of memory for Kafka server |
+
+* Kafka Connect Config Files: __kafka-connect/kafka-connect-cassandra-sink-1.4.0/conf-prod__
+| Edited Files | Description |
+| ------------ | ----------- |
+| cassandra-sink-standalone.properties | All configurations for standalone mode of Kafka Connect |
+
+* Cassandra Config Files: __apache-cassandra-4.0.7/conf__
+| Edited Files | Description |
+| ------------ | ----------- |
+| cassandra-env.sh | Check allocation of memory for Cassandra |
+| cassandra.yaml | All Cassandra configurations |
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
 
 **Note***: must edit .bashrc file and include path to `/kafka_2.13-3.3.1/bin/` to use shell commands without having to input full path*
 
