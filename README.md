@@ -21,9 +21,9 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 ### Usage<a id="1-3"></a>
 | Implemented? | Function | Pipeline | Description |
 | -------- | -------- | -------- | ----------- |
-| - [x] | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
-| - [ ] | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
-| - [ ] | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
+| <ul><li>- [x] </li></ul> | Store Raw Data | (Producer 1) → (Kafka Connect 1) | Store raw data immediately into DB without processing |
+| <ul><li>- [ ] </li></ul> | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
+| <ul><li>- [ ] </li></ul> | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
