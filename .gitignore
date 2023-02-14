@@ -1,9 +1,17 @@
+# Cassandra
 apache-cassandra-4.0.7/
+!apache-cassandra-4.0.7/conf
+
+# Kafka
 kafka_2.13-3.3.1/
+!kafka_2.13-3.3.1/conf
+
+# Kafka Connect
 kafka-connect/
-python-env/
+!kafka-connect/kafka-connect-cassandra-sink-1.4.0/conf-prod/
 
 # Python
+python-env/
 __pycache__/
 
 # Ignore textfiles
