@@ -26,7 +26,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | <ul><li>- [ ] </li></ul> | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
 ### Run Files<a id="4-2"></a>
-* Start Servers
+#### Start Servers
 > Starting Directory: mongooseAI-prod/
 
 | Shell File | Description |
@@ -38,7 +38,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | bin/run_connect.sh | <ul><li>Start Kafka Connect server</li></ul> |
 | bin/run_venv.sh | <ul><li>Start Python virtual environment</li></ul> |
 
-* Run Kafka Python Tests
+#### Run Kafka Python Tests
 > Starting Directory: mongooseAI-prod/mongoose_python/cassandra
 
 | Directory | Shell File | Description |
@@ -47,7 +47,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
 | mongoose_python | run_acquisition.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
 
-* Run Kafka Java Tests
+#### Run Kafka Java Tests
 > Starting Directory: mongooseAI-prod/mongoose_python/cassandra
 
 | Directory | Shell File | Description |
@@ -56,7 +56,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
 | mongoose_java | run_consumer.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
 
-* Monitoring Solutions
+#### Monitoring Solutions
 > Starting Directory: mongooseAI-prod/monitoring/
 
 | Shell File | Description |
