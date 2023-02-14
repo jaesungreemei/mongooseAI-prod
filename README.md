@@ -157,57 +157,59 @@ mongooseAI-prod
 
 ### (4-1) Setup<a id="4-1"></a>
 * Install Kafka
->> Starting Directory: mongooseAI-prod/
+> Starting Directory: mongooseAI-prod/
 ```
 tar -xzf ./downloads/kafka_2.13-3.3.1.tgz
 ```
 
 * Install Cassandra
->> Starting Directory: mongooseAI-prod/
+> Starting Directory: mongooseAI-prod/
 ```
 tar xzvf ./downloads/apache-cassandra-4.0.7-bin.tar.gz
 ```
 
+##### Kafka Connector Setup
 * Install DataStax Kafka Connector
->> Starting Directory: mongooseAI-prod/
+> Starting Directory: mongooseAI-prod/
 ```
 mkdir kafka-connect
 cd ./kafka-connect/
 tar xzf ../downloads/kafka-connect-cassandra-sink-1.4.0.tar.gz
 ```
 
-    * Configure connect-standalone.properties
->> Starting Directory: mongooseAI-prod/kafka-connect/
+* Configure connect-standalone.properties
+> Starting Directory: mongooseAI-prod/kafka-connect/
 ```
 cd ../kafka_2.13-3.3.1/config/
 
 # Configure path to Kafka Connect JAR file
-echo plugin.path=~/mongooseAI-prod/kafka-connect/kafka-connect-cassandra-sink-1.4.0/kafka-connect-cassandra-sink-1.4.0.jar >> connect-standalone.properties
+echo plugin.path=~/mongooseAI-prod/kafka-connect/kafka-connect-cassandra-sink-1.4.0/kafka-connect-cassandra-sink-1.4.0.jar > connect-standalone.properties
 ```
 
-    * Edit connect-standalone.properties
+* Edit connect-standalone.properties
 ```
 key.converter=org.apache.kafka.connect.storage.StringConverter
 key.converter.schemas.enable=false
 value.converter.schemas.enable=false
 ```
 
-    * Move and configure cassandra-sink-standalone.properties
->> Starting Directory: mongooseAI-prod/kafka-conncet/
+* Move and configure cassandra-sink-standalone.properties
+> Starting Directory: mongooseAI-prod/kafka-conncet/
 ```
 mkdir ./kafka-connect-cassandra-sink-1.4.0/conf-prod
 cd kafka-connect-cassandra-sink-1.4.0/conf-prod
 cp ../conf/cassandra-sink-standalone.properties.sample cassandra-sink-standalone.properties
 ```
 
-    * Edit cassandra-sink-standalone.properties according to Cassandra DB structure
->> Details in mongooseAI-prod/kafka-connect/README.md
+* Edit cassandra-sink-standalone.properties according to Cassandra DB structure
+> Details in mongooseAI-prod/kafka-connect/README.md
 
-    * Configure Kafka Connect logging
->> kafka_2.13-3.3.1/config/connect-log4j.properties
+* Configure Kafka Connect logging
+> kafka_2.13-3.3.1/config/connect-log4j.properties
 
-* Python Virtual Environment Setup
->> Starting Directory: mongooseAI-prod/
+##### Python Virtual Environment Setup
+* Install Virtual Environment
+> Starting Directory: mongooseAI-prod/
 ```
 pip3 install virtualenv
 python3 -m venv python-env
@@ -215,19 +217,19 @@ python3 -m venv python-env
 source python-env/bin/activate
 ```
 
-    * Install DataStax Cassandra Python Driver
+* Install DataStax Cassandra Python Driver
 ```
 pip3 install cassandra-driver
 ```
 
-    * Install Confluent Kafka Python Client
+* Install Confluent Kafka Python Client
 ```
 pip3 install confluent-kafka
 ```
 
 ### (4-2) Run Files<a id="4-2"></a>
 * Start Servers
->> Starting Directory: mongooseAI-prod/
+> Starting Directory: mongooseAI-prod/
 | Shell File | Description |
 | ---------- | ----------- |
 | launch_wsl.sh | For development in WSL2 Environment <br><ul><li>Set bash PATH environment variable</li><li>Split panes</li></ul> |
@@ -238,7 +240,7 @@ pip3 install confluent-kafka
 | bin/run_venv.sh | <ul><li>Start Python virtual environment</li></ul> |
 
 * Run Kafka Python Tests
->> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
 | Directory | Shell File | Description |
 | --------- | ---------- | ----------- |
 | mongoose_python | run_acquisition.sh | <ul><li>Start data acquisition producer</li></ul> |
@@ -246,7 +248,7 @@ pip3 install confluent-kafka
 | mongoose_python | run_acquisition.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
 
 * Run Kafka Java Tests
->> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
 | Directory | Shell File | Description |
 | --------- | ---------- | ----------- |
 | mongoose_java | run_producer.sh | <ul><li>Start data acquisition producer</li></ul> |
@@ -254,7 +256,7 @@ pip3 install confluent-kafka
 | mongoose_java | run_consumer.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
 
 * Monitoring Solutions
->> Starting Directory: mongooseAI-prod/monitoring/
+> Starting Directory: mongooseAI-prod/monitoring/
 | Shell File | Description |
 | ---------- | ----------- |
 | kafka-ui/run_kafka_ui.sh | Start UI for Apache Kafka application |
