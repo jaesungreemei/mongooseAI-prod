@@ -25,6 +25,44 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | <ul><li>- [ ] </li></ul> | Raw Data Pre-Processing | (Producer 1) → (Flink) | Use Flink to preprocess raw data before storing |
 | <ul><li>- [ ] </li></ul> | Data Analysis | (Producer 1) → (Consumer 1) → (Producer 2) → (Kafka Connect 2) | Forward data to AI/ML engine, AI/ML engine sends back analysis through Kafka to be stored in DB |
 
+### Run Files<a id="4-2"></a>
+* Start Servers
+> Starting Directory: mongooseAI-prod/
+
+| Shell File | Description |
+| ---------- | ----------- |
+| launch_wsl.sh | For development in WSL2 Environment <br><ul><li>Set bash PATH environment variable</li><li>Split panes</li></ul> |
+| bin/run_cassandra.sh | <ul><li>Set Cassandra server</li></ul> |
+| bin/run_zookeeper.sh | <ul><li>Set Zookeeper server</li></ul> |
+| bin/run_kafka.sh | <ul><li>Delete all files in /tmp/</li><li>Start Kafka server</li></ul> |
+| bin/run_connect.sh | <ul><li>Start Kafka Connect server</li></ul> |
+| bin/run_venv.sh | <ul><li>Start Python virtual environment</li></ul> |
+
+* Run Kafka Python Tests
+> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+
+| Directory | Shell File | Description |
+| --------- | ---------- | ----------- |
+| mongoose_python | run_acquisition.sh | <ul><li>Start data acquisition producer</li></ul> |
+| mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
+| mongoose_python | run_acquisition.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
+
+* Run Kafka Java Tests
+> Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+
+| Directory | Shell File | Description |
+| --------- | ---------- | ----------- |
+| mongoose_java | run_producer.sh | <ul><li>Start data acquisition producer</li></ul> |
+| mongoose_python | run_test.sh | <ul><li>Start test data generator</li><li>Send data via TCP socket to producer</li></ul> |
+| mongoose_java | run_consumer.sh | <ul><li>Start consumer for applications (eg. AI application) </li></ul> |
+
+* Monitoring Solutions
+> Starting Directory: mongooseAI-prod/monitoring/
+
+| Shell File | Description |
+| ---------- | ----------- |
+| kafka-ui/run_kafka_ui.sh | Start UI for Apache Kafka application |
+
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <!-- ## Table of Contents
