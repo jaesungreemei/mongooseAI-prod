@@ -230,6 +230,7 @@ pip3 install confluent-kafka
 ### (4-2) Run Files<a id="4-2"></a>
 * Start Servers
 > Starting Directory: mongooseAI-prod/
+
 | Shell File | Description |
 | ---------- | ----------- |
 | launch_wsl.sh | For development in WSL2 Environment <br><ul><li>Set bash PATH environment variable</li><li>Split panes</li></ul> |
@@ -241,6 +242,7 @@ pip3 install confluent-kafka
 
 * Run Kafka Python Tests
 > Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+
 | Directory | Shell File | Description |
 | --------- | ---------- | ----------- |
 | mongoose_python | run_acquisition.sh | <ul><li>Start data acquisition producer</li></ul> |
@@ -249,6 +251,7 @@ pip3 install confluent-kafka
 
 * Run Kafka Java Tests
 > Starting Directory: mongooseAI-prod/mongoose_python/cassandra
+
 | Directory | Shell File | Description |
 | --------- | ---------- | ----------- |
 | mongoose_java | run_producer.sh | <ul><li>Start data acquisition producer</li></ul> |
@@ -257,12 +260,14 @@ pip3 install confluent-kafka
 
 * Monitoring Solutions
 > Starting Directory: mongooseAI-prod/monitoring/
+
 | Shell File | Description |
 | ---------- | ----------- |
 | kafka-ui/run_kafka_ui.sh | Start UI for Apache Kafka application |
 
 ### (4-3) Edited Config Files<a id="4-3"></a>
 * Kafka Config Files: __kafka_2.13-3.3.1/config__
+
 | Edited Files | Description |
 | ------------ | ----------- |
 | connect-log4j.properties | Add Kafka Connect log properties, Kafka log settings |
@@ -273,11 +278,13 @@ pip3 install confluent-kafka
 | kafka-server-start.sh | Check allocation of memory for Kafka server |
 
 * Kafka Connect Config Files: __kafka-connect/kafka-connect-cassandra-sink-1.4.0/conf-prod__
+
 | Edited Files | Description |
 | ------------ | ----------- |
 | cassandra-sink-standalone.properties | All configurations for standalone mode of Kafka Connect |
 
 * Cassandra Config Files: __apache-cassandra-4.0.7/conf__
+
 | Edited Files | Description |
 | ------------ | ----------- |
 | cassandra-env.sh | Check allocation of memory for Cassandra |
