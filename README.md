@@ -9,6 +9,7 @@ Kafka-Flink-Cassandra Data Pipeline Implementation for Mongoose AI.
 | ----------------- | ------------- |
 | Apache Kafka      | 3.3.1  |
 | Apache Cassandra  | 4.0.7  |
+| Apache Flink  | 1.16.1  |
 | DataStax Apache Kafka Connector | 1.4.0 |
 | DataStax Driver for Apache Cassandra | 3.25 |
 | Confluent Kafka Python | 2.0.2 |

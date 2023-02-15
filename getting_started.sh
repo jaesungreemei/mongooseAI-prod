@@ -6,6 +6,9 @@ tar -xzf ./downloads/kafka_2.13-3.3.1.tgz
 # Install Cassandra
 tar xzvf ./downloads/apache-cassandra-4.0.7-bin.tar.gz
 
+# Install Flink
+tar xvfz ./downloads/flink-1.16.1-bin-scala_2.12.tgz
+
 ####################################################
 
 # Install Kafka Connect
@@ -26,4 +29,3 @@ cd ../../kafka-connect/
 mkdir ./kafka-connect-cassandra-sink-1.4.0/conf-prod
 cd kafka-connect-cassandra-sink-1.4.0/conf-prod
 cp ../conf/cassandra-sink-standalone.properties.sample cassandra-sink-standalone.properties
-
